@@ -3,9 +3,20 @@ from googleapiclient.discovery import build
 from google.oauth2 import service_account
 import pandas as pd
 import plotly.express as px
+import json
+import os
 
 # === CONFIG ===
-SERVICE_ACCOUNT_FILE = 'creds.json'
+
+creds_json = os.environ.get("GOOGLE_CREDENTIALS")
+if not creds_json:
+    raise ValueError("Missing GOOGLE_CREDENTIALS environment variable")
+
+SERVICE_ACCOUNT_FILE = "/tmp/creds.json"
+
+with open(SERVICE_ACCOUNT_FILE, "w") as f:
+    f.write(creds_json)
+
 SPREADSHEET_ID = '1Puuto3cRoNyD14Z6DrHXMq4vM9rIMRshKgxyyA4xGNs'
 RANGE_NAME = "' Analytics Master Sheet'!A1:AZ200"
 
